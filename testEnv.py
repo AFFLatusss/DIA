@@ -1,6 +1,7 @@
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
+plt.style.use('ggplot')
 
 env = gym.make("CartPole-v1" )
 # env = gym.make('BipedalWalker-v3')

@@ -2,8 +2,8 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 
-pos_space = np.linspace(-1.2, 0.6, 20)
-vel_space = np.linspace(-0.07, 0.07, 20)
+# pos_space = np.linspace(-1.2, 0.6, 20)
+# vel_space = np.linspace(-0.07, 0.07, 20)
 
 def to_discrete(pos_limit, vel_limit, bin_size=20):
 
@@ -45,6 +45,7 @@ def get_env_limit(env):
 
 if __name__ == "__main__":
     # ? initial setup
+    plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
 
     #The number of bin we used to convert continuous space to discrete space
@@ -54,10 +55,10 @@ if __name__ == "__main__":
 
 
 
-    n_games = 5000
+    n_games = 25000
     learning_rate = 0.1
     gamma = 0.99
-    epsilon =  2.0
+    epsilon =  1.0
     env._max_episode_steps = 1000
 
     states = create_state_space(20)
@@ -70,6 +71,9 @@ if __name__ == "__main__":
 
     score = 0
     total_rewards = np.zeros(n_games)
+    aggr_ep_rewards = {"episode":[], "average":[], "minimum":[], "maximum":[]}
+
+
     for i in range(n_games):
         done = False
         obs = env.reset()
@@ -92,16 +96,30 @@ if __name__ == "__main__":
                 learning_rate*(reward + gamma*Q[new_state, action_] - Q[state, action])
             state = new_state
 
-            if new_obs[0] >= env.goal_position:
-                print(done)
-                print(f"done on episode{i} ")
+            # if new_obs[0] >= env.goal_position:
+                # print(done)
+                # print(f"done on episode{i} ")
         total_rewards[i] = score
         epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
 
+
     mean_rewards = np.zeros(n_games)
+    max_rewards = np.zeros(n_games)
+    min_rewards = np.zeros(n_games)
+    num_game = np.zeros(n_games)
     for t in range(n_games):
+        num_game[t] = t
         mean_rewards[t] = np.mean(total_rewards[max(0,t-50):(t+1)])
-    plt.plot(mean_rewards)
-    plt.savefig('Q-MountainCar.png')
+        max_rewards[t] = np.max(total_rewards[max(0,t-50):(t+1)])
+        min_rewards[t] = np.min(total_rewards[max(0,t-50):(t+1)])
+
+    # plt.plot(mean_rewards)
+    # plt.savefig('Q-MountainCar.png')
+
+    plt.plot(num_game, mean_rewards, label="avg")
+    plt.plot(num_game, min_rewards, label="min")
+    plt.plot(num_game, max_rewards, label="max")
+    plt.legend(loc=1)
+    plt.show()
 
         

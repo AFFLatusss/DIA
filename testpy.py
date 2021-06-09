@@ -13,7 +13,7 @@ for state in state_space:
 
 # print(state_space)
 
-
-print(state)
+for t in range(10):
+    print(max(0,t-5))
 
 
