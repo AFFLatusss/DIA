@@ -2,8 +2,10 @@ import gym
 import numpy as np
 import matplotlib.pyplot as plt
 
-env = gym.make("MountainCar-v0")
+env = gym.make("CartPole-v1" )
+# env = gym.make('BipedalWalker-v3')
 # env.reset()
+
 
 # print(env.observation_space.high)
 
