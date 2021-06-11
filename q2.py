@@ -59,7 +59,7 @@ if __name__ == "__main__":
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
-    env._max_episode_steps = 1000
+    env._max_episode_steps = 2000
 
     states = create_state_space(bin_size)
 
