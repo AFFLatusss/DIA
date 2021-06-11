@@ -49,19 +49,19 @@ if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
 
     #The number of bin we used to convert continuous space to discrete space
-    bin_size = 20 
+    bin_size = 30 
     pos_limit, vel_limit = get_env_limit(env)
     pos_space, vel_space = to_discrete(pos_limit, vel_limit, bin_size)
 
 
 
-    n_games = 25000
+    n_games = 50000
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
     env._max_episode_steps = 1000
 
-    states = create_state_space(20)
+    states = create_state_space(bin_size)
 
     Q = {}
     for state in states:
@@ -99,10 +99,12 @@ if __name__ == "__main__":
             # if new_obs[0] >= env.goal_position:
                 # print(done)
                 # print(f"done on episode{i} ")
+
         total_rewards[i] = score
+        # *Epsilon decay
         epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
 
-
+    # *Plot graphs
     mean_rewards = np.zeros(n_games)
     max_rewards = np.zeros(n_games)
     min_rewards = np.zeros(n_games)
@@ -119,7 +121,7 @@ if __name__ == "__main__":
     plt.plot(num_game, mean_rewards, label="avg")
     plt.plot(num_game, min_rewards, label="min")
     plt.plot(num_game, max_rewards, label="max")
-    plt.legend(loc=1)
+    plt.legend(loc=2)
     plt.show()
 
         
