@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 # # print(state_space)
 
-# for t in range(10):
-#     print(max(0,t-5))
-print(np.linspace(0, 10, 20))
+for t in range(20):
+    print(t)
+
 

@@ -2,9 +2,6 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 
-# pos_space = np.linspace(-1.2, 0.6, 20)
-# vel_space = np.linspace(-0.07, 0.07, 20)
-
 def to_discrete(pos_limit, vel_limit, bin_size=20):
 
     pos_discrete = np.linspace(pos_limit[0], pos_limit[1], bin_size)
