@@ -79,9 +79,14 @@ if __name__ == "__main__":
             print(f'episode {i}, score {score}, epsilon {epsilon:.3f}')
 
         score = 0
+        action = max_action(Q, state) if np.random.random() > epsilon else env.action_space.sample()
+
         while not done:
-            action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
-                else max_action(Q, state)
+        #     if i % 1000 == 0:
+        #         env.render()
+        
+            # action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
+            #     else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
@@ -92,6 +97,7 @@ if __name__ == "__main__":
             Q[state, action] = Q[state, action] + \
                 learning_rate*(reward + gamma*Q[new_state, action_] - Q[state, action])
             state = new_state
+            action = action_
 
             # if new_obs[0] >= env.goal_position:
                 # print(done)
