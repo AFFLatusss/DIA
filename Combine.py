@@ -109,8 +109,8 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
         action = max_action(S, state) if np.random.random() > epsilon else env.action_space.sample()
 
         while not done:
-        #     if i % 1000 == 0:
-        #         env.render()
+            # if i % 10000 == 0 or i % 25000 == 0  :
+            #     env.render()
         
             # action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
             #     else max_action(Q, state)
@@ -155,6 +155,7 @@ if __name__ == "__main__":
     # ? initial setup
     plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
+    env = gym.wrappers.Monitor(env, "recording")
 
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
