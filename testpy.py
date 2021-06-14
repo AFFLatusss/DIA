@@ -9,13 +9,15 @@ df = pd.DataFrame({
 
 df1 = pd.DataFrame({
     'num':[1,2,3,4,5,6,7,8,9],
-    'gender':[3,8,2,9,5,3,10,11,23],
+    'age':[3,8,2,9,5,3,10,11,23],
     'cc':[213,8,24,23,45,12,30,51,63]
 })
 
 bx = df.plot.line(x='num',y ='age')
-p1 = df1.plot.line(x='num',y='gender',ax=bx)
+p1 = df1.plot.line(x='num',y='age',ax=bx)
+p1.legend(["age1", "age2"]);
 p1.figure.savefig('p1.png')
+
 
 
 

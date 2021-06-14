@@ -194,11 +194,30 @@ if __name__ == "__main__":
     epsilon =  1.0
     s_data = start_sarsa(epsilon, S_score, S_total_rewards)
 
+#  ! plotting graphs
     q_lines = q_data.plot.line(x='num_games')
     q_lines.figure.savefig('Q-Learning_rewards.png')
 
     s_lines = s_data.plot.line(x='num_games')
     s_lines.figure.savefig('Sarsa_rewards.png')
+
+# ? plotting max_rewards of both methods to compare
+    maxQ = q_data.plot.line(x='num_games', y='max_rewards')
+    maxS = s_data.plot.line(x='num_games', y='max_rewards', ax=maxQ)
+    maxS.plt.legend(["Q-Learning", "SARSA"])
+    maxS.figure.savefig('Max_compare.png')
+
+# ? Plotting mean_rewards of both methods to compare
+    meanQ = q_data.plot.line(x='num_games', y='mean_rewards')
+    meanS = s_data.plot.line(x='num_games',y='mean_rewards', ax=meanQ)
+    meanS.plt.legend(["Q-Learning", "SARSA"])
+    meanS.figure.savefig('Mean_compare.png')
+
+# ? Plotting min_rewards of both methods to compare
+    minQ = q_data.plot.line(x='num_games', y='min_rewards')
+    minS = s_data.plot.line(x='num_games', y='min_rewards', ax=minQ)
+    minS.plt.legend(["Q-Learning", "SARSA"])
+    minS.figure.savefig('Min_compare.png')
 
 
     
