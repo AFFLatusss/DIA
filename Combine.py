@@ -89,7 +89,7 @@ def start_q(epsilon,Q_score,Q_total_rewards):
     # plt.plot(mean_rewards)
     # plt.savefig('Q-Learning_rewards.png')
 
-    q_df = pd.DataFrame({'num_game':num_game, 'mean_rewards':mean_rewards, 'max_rewards':max_rewards, 'min_rewards':min_rewards})
+    q_df = pd.DataFrame({'num_games':num_game, 'mean_rewards':mean_rewards, 'max_rewards':max_rewards, 'min_rewards':min_rewards})
 
     return q_df
     
@@ -106,7 +106,7 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             print(f'episode {i}, score {S_score}, epsilon {epsilon:.3f}')
 
         S_score = 0
-        action = max_action(Q, state) if np.random.random() > epsilon else env.action_space.sample()
+        action = max_action(S, state) if np.random.random() > epsilon else env.action_space.sample()
 
         while not done:
         #     if i % 1000 == 0:
@@ -119,10 +119,10 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             # print(new_obs)
             S_score += reward
 
-            action_ = max_action(Q, new_state)
+            action_ = max_action(S, new_state)
             # ! update Q table with new value
-            Q[state, action] = Q[state, action] + \
-                learning_rate*(reward + gamma*Q[new_state, action_] - Q[state, action])
+            S[state, action] = S[state, action] + \
+                learning_rate*(reward + gamma*S[new_state, action_] - S[state, action])
             state = new_state
             action = action_
 
@@ -194,10 +194,10 @@ if __name__ == "__main__":
     epsilon =  1.0
     s_data = start_sarsa(epsilon, S_score, S_total_rewards)
 
-    q_lines = q_data.plot.line(x='num_game')
+    q_lines = q_data.plot.line(x='num_games')
     q_lines.figure.savefig('Q-Learning_rewards.png')
 
-    s_lines = s_data.plot.line(x='num_game')
+    s_lines = s_data.plot.line(x='num_games')
     s_lines.figure.savefig('Sarsa_rewards.png')
 
 
