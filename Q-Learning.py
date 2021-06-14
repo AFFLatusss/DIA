@@ -1,6 +1,8 @@
 import numpy as np
 import gym
 import matplotlib.pyplot as plt
+from matplotlib import animation
+
 
 # pos_space = np.linspace(-1.2, 0.6, 20)
 # vel_space = np.linspace(-0.07, 0.07, 20)
@@ -43,6 +45,20 @@ def get_env_limit(env):
 
     return (pos_high,pos_low), (vel_high,vel_low)
 
+def save_frames_as_gif(frames, filename, path='./', filetype='.gif'):
+
+    #Mess with this to change frame size
+    plt.figure(figsize=(frames[0].shape[1] / 72.0, frames[0].shape[0] / 72.0), dpi=72)
+
+    patch = plt.imshow(frames[0])
+    plt.axis('off')
+
+    def animate(i):
+        patch.set_data(frames[i])
+
+    anim = animation.FuncAnimation(plt.gcf(), animate, frames = len(frames), interval=50)
+    anim.save(path + str(filename) + filetype, writer='imagemagick', fps=60)
+
 if __name__ == "__main__":
     # ? initial setup
     plt.style.use('ggplot')
@@ -82,7 +98,15 @@ if __name__ == "__main__":
             print(f'episode {i}, score {score}, epsilon {epsilon:.3f}')
 
         score = 0
+        frames = []
         while not done:
+            if i % 10000 == 0 :
+                frames.append(env.render(mode="rgb_array"))
+            elif frames:
+                save_frames_as_gif(frames, i)
+            else:
+                frames = []
+
             action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
                 else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)

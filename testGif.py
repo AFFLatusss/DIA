@@ -8,7 +8,7 @@ sudo apt-get install imagemagick
 Open file in CLI with:
 xgd-open <filelname>
 """
-def save_frames_as_gif(frames, path='./', filename='gym_animation.gif'):
+def save_frames_as_gif(frames, filename, path='./', filetype='.gif'):
 
     #Mess with this to change frame size
     plt.figure(figsize=(frames[0].shape[1] / 72.0, frames[0].shape[0] / 72.0), dpi=72)
@@ -20,7 +20,7 @@ def save_frames_as_gif(frames, path='./', filename='gym_animation.gif'):
         patch.set_data(frames[i])
 
     anim = animation.FuncAnimation(plt.gcf(), animate, frames = len(frames), interval=50)
-    anim.save(path + filename, writer='imagemagick', fps=60)
+    anim.save(path + str(filename) + filetype, writer='imagemagick', fps=60)
 
 #Make gym env
 env = gym.make('CartPole-v1')
@@ -36,4 +36,4 @@ for t in range(1000):
     if done:
         break
 env.close()
-save_frames_as_gif(frames)
+save_frames_as_gif(frames, 500)
