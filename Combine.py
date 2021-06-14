@@ -155,7 +155,7 @@ if __name__ == "__main__":
     # ? initial setup
     plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
-    env = gym.wrappers.Monitor(env, "recording", force=True)
+    # env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
 
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
@@ -164,7 +164,7 @@ if __name__ == "__main__":
 
 
 
-    n_games = 25000
+    n_games = 30000
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
@@ -187,10 +187,10 @@ if __name__ == "__main__":
     S_score = 0
     S_total_rewards = np.zeros(n_games)
 
-
+    print("Starting Q")
     q_data = start_q(epsilon,Q_score,Q_total_rewards )
-    print("Starting Sarsa")
 
+    print("Starting Sarsa")
     #* Reset epsilon for Sarsa
     epsilon =  1.0
     s_data = start_sarsa(epsilon, S_score, S_total_rewards)
