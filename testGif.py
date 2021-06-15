@@ -28,12 +28,25 @@ env = gym.make('CartPole-v1')
 #Run the env
 observation = env.reset()
 frames = []
-for t in range(1000):
+for i in range(1000):
     #Render to frames buffer
-    frames.append(env.render(mode="rgb_array"))
-    action = env.action_space.sample()
-    _, _, done, _ = env.step(action)
-    if done:
-        break
+    # frames.append(env.render(mode="rgb_array"))
+    # action = env.action_space.sample()
+    # _, _, done, _ = env.step(action)
+    # if done:
+    #     break
+
+    done = False
+    # if i % 1000 == 0 and i > 0:
+    #     print(f'episode {i}, score {score}, epsilon {epsilon:.3f}')
+    frames = []
+    while not done:
+        if i % 1000 == 0 :
+            frames.append(env.render(mode="rgb_array"))
+        elif frames:
+            print("save" + i)
+            save_frames_as_gif(frames, i)
+        else:
+            frames = []
 env.close()
 save_frames_as_gif(frames, 500)

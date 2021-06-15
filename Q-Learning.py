@@ -71,11 +71,11 @@ if __name__ == "__main__":
 
 
 
-    n_games = 50000
+    n_games = 20000
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
-    env._max_episode_steps = 2000
+    env._max_episode_steps = 1000
 
     states = create_state_space(bin_size)
 
@@ -103,6 +103,7 @@ if __name__ == "__main__":
             if i % 10000 == 0 :
                 frames.append(env.render(mode="rgb_array"))
             elif frames:
+                print("save" + i)
                 save_frames_as_gif(frames, i)
             else:
                 frames = []
