@@ -149,6 +149,6 @@ if __name__ == "__main__":
     plt.plot(num_game, min_rewards, label="min")
     plt.plot(num_game, max_rewards, label="max")
     plt.legend(loc=2)
-    plt.show()
+    plt.savefig('Solo-Q.png')
 
         
