@@ -158,8 +158,8 @@ if __name__ == "__main__":
     env._max_episode_steps = 1000
 
     env = gym.wrappers.Monitor(env, "recording", force=True,\
-        video_callable=lambda episode_id: episode_id==1 or episode_id==9999 or episode_id==19998 or episode_id==15000 or episode_id==5000)
-        
+        video_callable=lambda episode_id: episode_id==1 or episode_id==9999 or episode_id==19998 or episode_id==15000 or episode_id==5000 or episode_id==10001)
+
 # 1 5000 9999 10001 15000 19998
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
