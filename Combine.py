@@ -155,7 +155,9 @@ if __name__ == "__main__":
     # ? initial setup
     plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
-    # env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
+    env._max_episode_steps = 1000
+
+    env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
 
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
@@ -163,12 +165,10 @@ if __name__ == "__main__":
     pos_space, vel_space = to_discrete(pos_limit, vel_limit, bin_size)
 
 
-
-    n_games = 30000
+    n_games = 30001
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
-    env._max_episode_steps = 1000
 
 #   ! Generate all possible state
     states = create_state_space(bin_size)
@@ -197,27 +197,29 @@ if __name__ == "__main__":
 
 #  ! plotting graphs
     q_lines = q_data.plot.line(x='num_games')
+    q_lines.legend(loc='lower right')
     q_lines.figure.savefig('Graphs/Q-Learning_rewards.png')
 
     s_lines = s_data.plot.line(x='num_games')
+    s_lines.legend(loc='lower right')
     s_lines.figure.savefig('Graphs/Sarsa_rewards.png')
 
 # ? plotting max_rewards of both methods to compare
     maxQ = q_data.plot.line(x='num_games', y='max_rewards')
     maxS = s_data.plot.line(x='num_games', y='max_rewards', ax=maxQ)
-    maxS.legend(["Q-Learning", "SARSA"])
+    maxS.legend(["Q-Learning", "SARSA"],loc='lower right')
     maxS.figure.savefig('Graphs/Max_compare.png')
 
 # ? Plotting mean_rewards of both methods to compare
     meanQ = q_data.plot.line(x='num_games', y='mean_rewards')
     meanS = s_data.plot.line(x='num_games',y='mean_rewards', ax=meanQ)
-    meanS.legend(["Q-Learning", "SARSA"])
+    meanS.legend(["Q-Learning", "SARSA"],loc='lower right')
     meanS.figure.savefig('Graphs/Mean_compare.png')
 
 # ? Plotting min_rewards of both methods to compare
     minQ = q_data.plot.line(x='num_games', y='min_rewards')
     minS = s_data.plot.line(x='num_games', y='min_rewards', ax=minQ)
-    minS.legend(["Q-Learning", "SARSA"])
+    minS.legend(["Q-Learning", "SARSA"],loc='lower right')
     minS.figure.savefig('Graphs/Min_compare.png')
 
 

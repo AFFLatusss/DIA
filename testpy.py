@@ -15,7 +15,7 @@ df1 = pd.DataFrame({
 
 bx = df.plot.line(x='num',y ='age')
 p1 = df1.plot.line(x='num',y='age',ax=bx)
-p1.legend(["age1", "age2"]);
+p1.legend(["age1", "age2"],loc='lower right');
 p1.figure.savefig('p1.png')
 
 
@@ -23,5 +23,7 @@ p1.figure.savefig('p1.png')
 
 cx = df.plot.line(x='num', y='bb')
 p2 = df1.plot.line(x='num',y = 'cc', ax=cx)
+p2.legend(loc='lower right')
 p2.figure.savefig('p2.png')
+
 
