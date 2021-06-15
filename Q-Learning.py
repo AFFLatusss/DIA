@@ -63,6 +63,7 @@ if __name__ == "__main__":
     # ? initial setup
     plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
+    env._max_episode_steps = 1000
     env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
 
     #The number of bin we used to convert continuous space to discrete space
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
-    env._max_episode_steps = 1000
+    
 
     states = create_state_space(bin_size)
 
