@@ -63,6 +63,7 @@ if __name__ == "__main__":
     # ? initial setup
     plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
+    env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
 
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
