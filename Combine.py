@@ -157,7 +157,7 @@ if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
     env._max_episode_steps = 1000
 
-    env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0 or episode_id%19999==0 or episode_id%39999==0 )
+    env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%5000==0 or episode_id%9999==0 or episode_id%19998==0 )
 
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
@@ -165,8 +165,8 @@ if __name__ == "__main__":
     pos_space, vel_space = to_discrete(pos_limit, vel_limit, bin_size)
 
 
-    n_games = 20000
-    learning_rate = 0.1
+    n_games = 10000
+    learning_rate = 0.03
     gamma = 0.99
     epsilon =  1.0
 
