@@ -64,7 +64,7 @@ if __name__ == "__main__":
     plt.style.use('ggplot')
     env = gym.make("MountainCar-v0")
     env._max_episode_steps = 1000
-    env = gym.wrappers.Monitor(env, "recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
+    # env = gym.wrappers.Monitor(env, "Q_recording", force=True, video_callable=lambda episode_id: episode_id%10000==0)
 
     #The number of bin we used to convert continuous space to discrete space
     bin_size = 30 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
 
 
-    n_games = 20001
+    n_games = 100000
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
@@ -102,13 +102,13 @@ if __name__ == "__main__":
         score = 0
         frames = []
         while not done:
-            if i % 10000 == 0 :
-                frames.append(env.render(mode="rgb_array"))
-            elif frames:
-                print("save" + i)
-                save_frames_as_gif(frames, i)
-            else:
-                frames = []
+            # if i % 10000 == 0 :
+            #     frames.append(env.render(mode="rgb_array"))
+            # elif frames:
+            #     print("save" + i)
+            #     save_frames_as_gif(frames, i)
+            # else:
+            #     frames = []
 
             action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
                 else max_action(Q, state)
@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
         total_rewards[i] = score
         # *Epsilon decay
-        epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
+        # epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
 
     # *Plot graphs
     mean_rewards = np.zeros(n_games)
@@ -149,6 +149,6 @@ if __name__ == "__main__":
     plt.plot(num_game, min_rewards, label="min")
     plt.plot(num_game, max_rewards, label="max")
     plt.legend(loc=2)
-    plt.savefig('Solo-Q.png')
+    plt.savefig('Random-Q.png')
 
         
