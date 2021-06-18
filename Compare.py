@@ -2,8 +2,9 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 import pandas as pd
+from timeit import default_timer as timer
 
-# pos_space = np.linspace(-1.2, 0.6, 20)
+# pos_space = np.linspace(-1.2, 0.6, 20)    
 # vel_space = np.linspace(-0.07, 0.07, 20)
 
 def to_discrete(pos_limit, vel_limit, bin_size=20):
@@ -45,6 +46,8 @@ def get_env_limit(env):
     return (pos_high,pos_low), (vel_high,vel_low)
 
 def start_q(epsilon,Q_score,Q_total_rewards):
+    start = timer()
+    first = False
     for i in range(n_games):
         done = False
         obs = env.reset()
@@ -57,6 +60,13 @@ def start_q(epsilon,Q_score,Q_total_rewards):
             action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
                 else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)
+
+            if new_obs[0] >= env.goal_position and first == False:
+                end = timer()
+                print(f"Q-time:{str(start -end)}")
+                first = True
+
+
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
             Q_score += reward
@@ -67,9 +77,7 @@ def start_q(epsilon,Q_score,Q_total_rewards):
                 learning_rate*(reward + gamma*Q[new_state, action_] - Q[state, action])
             state = new_state
 
-            # if new_obs[0] >= env.goal_position:
-                # print(done)
-                # print(f"done on episode{i} ")
+            
 
         Q_total_rewards[i] = Q_score
         # *Epsilon decay
@@ -98,6 +106,9 @@ def start_q(epsilon,Q_score,Q_total_rewards):
 
 
 def start_sarsa(epsilon,S_score,S_total_rewards):
+    start = timer()
+    first = False
+
     for i in range(n_games):
         done = False
         obs = env.reset()
@@ -115,6 +126,12 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             # action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
             #     else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)
+
+            if new_obs[0] >= env.goal_position and first == False:
+                end = timer()
+                print(f"SARSA-time:{str(start -end)}")
+                first = True
+                
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
             S_score += reward
@@ -126,9 +143,7 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             state = new_state
             action = action_
 
-            # if new_obs[0] >= env.goal_position:
-                # print(done)
-                # print(f"done on episode{i} ")
+            
 
         S_total_rewards[i] = S_score
         # *Epsilon decay

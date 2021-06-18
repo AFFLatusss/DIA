@@ -2,6 +2,8 @@ import numpy as np
 import gym
 import matplotlib.pyplot as plt
 import pandas as pd
+from timeit import default_timer as timer
+
 
 # pos_space = np.linspace(-1.2, 0.6, 20)
 # vel_space = np.linspace(-0.07, 0.07, 20)
@@ -45,6 +47,8 @@ def get_env_limit(env):
     return (pos_high,pos_low), (vel_high,vel_low)
 
 def start_q(epsilon,Q_score,Q_total_rewards):
+    start = timer()
+    first = False
     for i in range(n_games):
         done = False
         obs = env.reset()
@@ -57,6 +61,11 @@ def start_q(epsilon,Q_score,Q_total_rewards):
             action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
                 else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)
+
+            if new_obs[0] >= env.goal_position and first == False:
+                end = timer()
+                print(f"Q-time:{str(start -end)}")
+
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
             Q_score += reward
@@ -98,6 +107,8 @@ def start_q(epsilon,Q_score,Q_total_rewards):
 
 
 def start_sarsa(epsilon,S_score,S_total_rewards):
+    start = timer()
+    first = False
     for i in range(n_games):
         done = False
         obs = env.reset()
@@ -115,6 +126,9 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             # action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
             #     else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)
+            if new_obs[0] >= env.goal_position and first == False:
+                end = timer()
+                print(f"SARSA-time:{str(start -end)}")
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
             S_score += reward
@@ -126,9 +140,7 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             state = new_state
             action = action_
 
-            # if new_obs[0] >= env.goal_position:
-                # print(done)
-                # print(f"done on episode{i} ")
+            
 
         S_total_rewards[i] = S_score
         # *Epsilon decay
@@ -206,7 +218,7 @@ if __name__ == "__main__":
     s_lines.legend(loc='lower right')
     s_lines.set_xlabel("Cumulative Reward")
     s_lines.set_ylabel("Episodes")
-    s_lines.figure.savefig('Graphs/Sarsa_rewards.png')
+    s_lines.figure.savefig('EpsilonGraphs/Sarsa_rewards.png')
 
 # ? plotting max_rewards of both methods to compare
     maxQ = q_data.plot.line(x='num_games', y='max_rewards')
@@ -214,7 +226,7 @@ if __name__ == "__main__":
     maxS.legend(["Q-Learning", "SARSA"],loc='lower right')
     maxS.set_xlabel("Cumulative Reward")
     maxS.set_ylabel("Episodes")
-    maxS.figure.savefig('Graphs/Max_compare.png')
+    maxS.figure.savefig('EpsilonGraphs/Max_compare.png')
 
 # ? Plotting mean_rewards of both methods to compare
     meanQ = q_data.plot.line(x='num_games', y='mean_rewards')
@@ -222,7 +234,7 @@ if __name__ == "__main__":
     meanS.legend(["Q-Learning", "SARSA"],loc='lower right')
     meanS.set_xlabel("Cumulative Reward")
     meanS.set_ylabel("Episodes")
-    meanS.figure.savefig('Graphs/Mean_compare.png')
+    meanS.figure.savefig('EpsilonGraphs/Mean_compare.png')
 
 # ? Plotting min_rewards of both methods to compare
     minQ = q_data.plot.line(x='num_games', y='min_rewards')
@@ -230,7 +242,7 @@ if __name__ == "__main__":
     minS.legend(["Q-Learning", "SARSA"],loc='lower right')
     minS.set_xlabel("Cumulative Reward")
     minS.set_ylabel("Episodes")
-    minS.figure.savefig('Graphs/Min_compare.png')
+    minS.figure.savefig('EpsilonGraphs/Min_compare.png')
 
 
     
