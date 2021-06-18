@@ -182,7 +182,7 @@ if __name__ == "__main__":
 
 
     n_games = 10000
-    learning_rate = 0.05
+    learning_rate = 0.1
     gamma = 0.99
     epsilon =  0.5
 
