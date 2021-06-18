@@ -214,7 +214,9 @@ if __name__ == "__main__":
 #  ! plotting graphs
     q_lines = q_data.plot.line(x='num_games')
     q_lines.legend(loc='lower right')
-    q_lines.figure.savefig('Graphs/Q-Learning_rewards.png')
+    q_lines.set_xlabel("Cumulative Reward")
+    q_lines.set_ylabel("Episodes")
+    q_lines.figure.savefig('EpsilonGraphs/Q-Learning_rewards.png')
 
     s_lines = s_data.plot.line(x='num_games')
     s_lines.legend(loc='lower right')
