@@ -64,7 +64,7 @@ def start_q(epsilon,Q_score,Q_total_rewards):
 
             if new_obs[0] >= env.goal_position and first == False:
                 end = timer()
-                print(f"Q-time:{str(start -end)}")
+                print(f"Q-time:{str(end -start)}")
 
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
@@ -128,7 +128,7 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
             new_obs, reward, done, info = env.step(action)
             if new_obs[0] >= env.goal_position and first == False:
                 end = timer()
-                print(f"SARSA-time:{str(start -end)}")
+                print(f"SARSA-time:{str(end -start)}")
             new_state = get_state(new_obs, pos_space, vel_space)
             # print(new_obs)
             S_score += reward
