@@ -73,7 +73,7 @@ def start_q(epsilon,Q_score,Q_total_rewards):
 
         Q_total_rewards[i] = Q_score
         # *Epsilon decay
-        epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
+        # epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
 
     # *Plot graphs
     mean_rewards = np.zeros(n_games)
@@ -132,7 +132,7 @@ def start_sarsa(epsilon,S_score,S_total_rewards):
 
         S_total_rewards[i] = S_score
         # *Epsilon decay
-        epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
+        # epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
 
     # *Plot graphs
     mean_rewards = np.zeros(n_games)
@@ -157,7 +157,7 @@ if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
     env._max_episode_steps = 1000
 
-    env = gym.wrappers.Monitor(env, "recording", force=True,\
+    env = gym.wrappers.Monitor(env, "Epsilon_recording", force=True,\
         video_callable=lambda episode_id: episode_id==1 or episode_id==9999 or episode_id==19998 or episode_id==15000 or episode_id==5000 or episode_id==10001)
 
 # 1 5000 9999 10001 15000 19998
@@ -170,7 +170,7 @@ if __name__ == "__main__":
     n_games = 10000
     learning_rate = 0.05
     gamma = 0.99
-    epsilon =  1.0
+    epsilon =  0.5
 
 #   ! Generate all possible state
     states = create_state_space(bin_size)
