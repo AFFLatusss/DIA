@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     n_games = 10000
     learning_rate = 0.05
-    gamma = 0.99
+    gamma = 0.9
     epsilon =  1.0
 
 #   ! Generate all possible state
@@ -204,24 +204,32 @@ if __name__ == "__main__":
 
     s_lines = s_data.plot.line(x='num_games')
     s_lines.legend(loc='lower right')
+    s_lines.set_xlabel("Cumulative Reward")
+    s_lines.set_ylabel("Episodes")
     s_lines.figure.savefig('Graphs/Sarsa_rewards.png')
 
 # ? plotting max_rewards of both methods to compare
     maxQ = q_data.plot.line(x='num_games', y='max_rewards')
     maxS = s_data.plot.line(x='num_games', y='max_rewards', ax=maxQ)
     maxS.legend(["Q-Learning", "SARSA"],loc='lower right')
+    maxS.set_xlabel("Cumulative Reward")
+    maxS.set_ylabel("Episodes")
     maxS.figure.savefig('Graphs/Max_compare.png')
 
 # ? Plotting mean_rewards of both methods to compare
     meanQ = q_data.plot.line(x='num_games', y='mean_rewards')
     meanS = s_data.plot.line(x='num_games',y='mean_rewards', ax=meanQ)
     meanS.legend(["Q-Learning", "SARSA"],loc='lower right')
+    meanS.set_xlabel("Cumulative Reward")
+    meanS.set_ylabel("Episodes")
     meanS.figure.savefig('Graphs/Mean_compare.png')
 
 # ? Plotting min_rewards of both methods to compare
     minQ = q_data.plot.line(x='num_games', y='min_rewards')
     minS = s_data.plot.line(x='num_games', y='min_rewards', ax=minQ)
     minS.legend(["Q-Learning", "SARSA"],loc='lower right')
+    minS.set_xlabel("Cumulative Reward")
+    minS.set_ylabel("Episodes")
     minS.figure.savefig('Graphs/Min_compare.png')
 
 
