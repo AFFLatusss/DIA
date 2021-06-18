@@ -214,38 +214,38 @@ if __name__ == "__main__":
 #  ! plotting graphs
     q_lines = q_data.plot.line(x='num_games')
     q_lines.legend(loc='lower right')
-    q_lines.set_xlabel("Cumulative Reward")
-    q_lines.set_ylabel("Episodes")
+    q_lines.set_ylabel("Cumulative Reward")
+    q_lines.set_xlabel("Episodes")
     q_lines.figure.savefig('EpsilonGraphs/Q-Learning_rewards.png')
 
     s_lines = s_data.plot.line(x='num_games')
     s_lines.legend(loc='lower right')
-    s_lines.set_xlabel("Cumulative Reward")
-    s_lines.set_ylabel("Episodes")
+    s_lines.set_ylabel("Cumulative Reward")
+    s_lines.set_xlabel("Episodes")
     s_lines.figure.savefig('EpsilonGraphs/Sarsa_rewards.png')
 
 # ? plotting max_rewards of both methods to compare
     maxQ = q_data.plot.line(x='num_games', y='max_rewards')
     maxS = s_data.plot.line(x='num_games', y='max_rewards', ax=maxQ)
     maxS.legend(["Q-Learning", "SARSA"],loc='lower right')
-    maxS.set_xlabel("Cumulative Reward")
-    maxS.set_ylabel("Episodes")
+    maxS.set_ylabel("Cumulative Reward")
+    maxS.set_xlabel("Episodes")
     maxS.figure.savefig('EpsilonGraphs/Max_compare.png')
 
 # ? Plotting mean_rewards of both methods to compare
     meanQ = q_data.plot.line(x='num_games', y='mean_rewards')
     meanS = s_data.plot.line(x='num_games',y='mean_rewards', ax=meanQ)
     meanS.legend(["Q-Learning", "SARSA"],loc='lower right')
-    meanS.set_xlabel("Cumulative Reward")
-    meanS.set_ylabel("Episodes")
+    meanS.set_ylabel("Cumulative Reward")
+    meanS.set_xlabel("Episodes")
     meanS.figure.savefig('EpsilonGraphs/Mean_compare.png')
 
 # ? Plotting min_rewards of both methods to compare
     minQ = q_data.plot.line(x='num_games', y='min_rewards')
     minS = s_data.plot.line(x='num_games', y='min_rewards', ax=minQ)
     minS.legend(["Q-Learning", "SARSA"],loc='lower right')
-    minS.set_xlabel("Cumulative Reward")
-    minS.set_ylabel("Episodes")
+    minS.set_ylabel("Cumulative Reward")
+    minS.set_xlabel("Episodes")
     minS.figure.savefig('EpsilonGraphs/Min_compare.png')
 
 
