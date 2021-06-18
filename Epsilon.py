@@ -208,7 +208,7 @@ if __name__ == "__main__":
 
     print("Starting Sarsa")
     #* Reset epsilon for Sarsa
-    epsilon =  1.0
+    epsilon =  0.5
     s_data = start_sarsa(epsilon, S_score, S_total_rewards)
 
 #  ! plotting graphs
