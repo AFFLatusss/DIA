@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
 
 
-    n_games = 100000
+    n_games = 10000
     learning_rate = 0.1
     gamma = 0.99
     epsilon =  1.0
@@ -102,19 +102,11 @@ if __name__ == "__main__":
         score = 0
         frames = []
         while not done:
-            # if i % 10000 == 0 :
-            #     frames.append(env.render(mode="rgb_array"))
-            # elif frames:
-            #     print("save" + i)
-            #     save_frames_as_gif(frames, i)
-            # else:
-            #     frames = []
-
+           
             action = np.random.choice([0,1,2]) if np.random.random() < epsilon\
                 else max_action(Q, state)
             new_obs, reward, done, info = env.step(action)
             new_state = get_state(new_obs, pos_space, vel_space)
-            # print(new_obs)
             score += reward
 
             action_ = max_action(Q, new_state)
@@ -123,13 +115,11 @@ if __name__ == "__main__":
                 learning_rate*(reward + gamma*Q[new_state, action_] - Q[state, action])
             state = new_state
 
-            # if new_obs[0] >= env.goal_position:
-                # print(done)
-                # print(f"done on episode{i} ")
+
 
         total_rewards[i] = score
         # *Epsilon decay
-        # epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
+        epsilon = epsilon - 2/n_games if epsilon > 0.01 else 0.01
 
     # *Plot graphs
     mean_rewards = np.zeros(n_games)
@@ -149,6 +139,6 @@ if __name__ == "__main__":
     plt.plot(num_game, min_rewards, label="min")
     plt.plot(num_game, max_rewards, label="max")
     plt.legend(loc=2)
-    plt.savefig('Random-Q.png')
+    plt.savefig('Q.png')
 
         
